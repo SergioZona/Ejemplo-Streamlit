@@ -13,6 +13,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import ExtraTreesRegressor
+from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import r2_score, mean_absolute_error
 
 
@@ -106,7 +107,7 @@ def dataframe():
 
 
 def predict():
-    model = st.radio('Choose a model', ['LinearRegression', 'RandomForestRegressor', 'ExtraTreesRegressor', 'KNeighborsRegressor', 'XGBoostRegressor'])
+    model = st.radio('Choose a model', ['LinearRegression', 'RandomForestRegressor', 'ExtraTreesRegressor', 'KNeighborsRegressor', 'XGBoostRegressor', 'NeuralNetwork'])
     num = st.number_input('How many days forecast?', value=5)
     num = int(num)
     if st.button('Predict'):
@@ -121,6 +122,10 @@ def predict():
             model_engine(engine, num)
         elif model == 'KNeighborsRegressor':
             engine = KNeighborsRegressor()
+            model_engine(engine, num)
+        elif model == 'NeuralNetwork':
+            # Implementación de la red neuronal con MLPRegressor
+            engine = MLPRegressor(hidden_layer_sizes=(100, ), max_iter=500, random_state=42)
             model_engine(engine, num)
         else:
             engine = XGBRegressor()
